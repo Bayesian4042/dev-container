@@ -12,6 +12,17 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import axios from "axios";
 
+interface TechnicalDesignArgs {
+  user_story_id: string;
+}
+
+function isTechnicalDesignArgs(args: unknown): args is TechnicalDesignArgs {
+  return typeof args === 'object' &&
+    args !== null &&
+    'user_story_id' in args &&
+    typeof (args as TechnicalDesignArgs).user_story_id === 'string';
+}
+
 const API_URL = "https://872bae3d-526e-4976-8487-456e90f23fef-00-39uay153efdwd.worf.replit.dev/api/user-stories";
 
 /**
@@ -44,6 +55,20 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           properties: {},
           required: []
         }
+      },
+      {
+        name: "get_technical_design",
+        description: "Get technical design details for a specific user story",
+        inputSchema: {
+          type: "object",
+          properties: {
+            user_story_id: {
+              type: "string",
+              description: "The ID of the user story to fetch technical design for"
+            }
+          },
+          required: ["user_story_id"]
+        }
       }
     ]
   };
@@ -71,6 +96,48 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           content: [{
             type: "text",
             text: `Error fetching user stories: ${errorMessage}`
+          }],
+          isError: true
+        };
+      }
+    }
+
+    case "get_technical_design": {
+      const args = request.params.arguments;
+      if (!args || !isTechnicalDesignArgs(args)) {
+        return {
+          content: [{
+            type: "text",
+            text: "Error: arguments must contain a valid user_story_id string"
+          }],
+          isError: true
+        };
+      }
+      const { user_story_id } = args;
+      if (!user_story_id) {
+        return {
+          content: [{
+            type: "text",
+            text: "Error: user_story_id parameter is required"
+          }],
+          isError: true
+        };
+      }
+
+      try {
+        const response = await axios.get(`${API_URL}/${user_story_id}/technical-design`);
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify(response.data, null, 2)
+          }]
+        };
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        return {
+          content: [{
+            type: "text",
+            text: `Error fetching technical design: ${errorMessage}`
           }],
           isError: true
         };

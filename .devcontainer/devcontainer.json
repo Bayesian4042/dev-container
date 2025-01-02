@@ -1,0 +1,74 @@
+{
+  "name": "Next.js Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "forwardPorts": [
+    3000
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js App",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/initialize.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Base JavaScript/TypeScript
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "dsznajder.es7-react-js-snippets",
+        "ms-vscode.vscode-typescript-next",
+        // React & Next.js
+        "bradlc.vscode-tailwindcss",
+        "csstools.postcss",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.npm-intellisense",
+        // Database & API
+        "prisma.prisma",
+        "mongodb.mongodb-vscode",
+        "mtxr.sqltools",
+        // Git & Collaboration
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "github.copilot",
+        // Testing & Debugging
+        "orta.vscode-jest",
+        "ryanluker.vscode-coverage-gutters",
+        "ms-vscode.js-debug",
+        // Docker & DevOps
+        "ms-azuretools.vscode-docker",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        // Productivity
+        "visualstudioexptteam.vscodeintellicode",
+        "streetsidesoftware.code-spell-checker",
+        // API Development
+        "rangav.vscode-thunder-client",
+        "42Crunch.vscode-openapi",
+        // Code Quality
+        "sonarsource.sonarlint-vscode",
+        "kisstkondoros.vscode-codemetrics",
+        "Orta.vscode-jest",
+        // Path & Import helpers
+        "christian-kohler.path-intellisense",
+        "steoates.autoimport",
+        // code generation
+        "saoudrizwan.claude-dev"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        }
+      }
+    }
+  },
+  "remoteUser": "node",
+  "containerEnv": {
+    "NODE_ENV": "development"
+  }
+}

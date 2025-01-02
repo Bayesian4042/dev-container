@@ -4,7 +4,8 @@
 npm install
 
 # Create necessary directories
-mkdir -p /home/codespace/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings
+# mkdir -p /home/node/.vscode-server/data/User/globalStorage/saoudrizwan.claude-dev/settings
+mkdir -p /home/node/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings
 
 # Setup user-stories server
 if [ -d "/workspaces/dev-container/user-stories-server" ]; then
@@ -48,7 +49,7 @@ if [ -d "/workspaces/dev-container/user-stories-server" ]; then
 EOF
 
     # Create MCP settings file
-    cat > /home/codespace/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json << 'EOF'
+    cat > /home/node/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json <<EOF
 {
   "mcpServers": {
     "user-stories": {
@@ -61,7 +62,7 @@ EOF
 EOF
 
     # Set proper permissions
-    chmod 644 /home/codespace/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json
+    chmod 644 /home/node/.vscode-remote/data/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json
     
     # Start the server automatically
     nohup node /workspaces/dev-container/user-stories-server/build/index.js

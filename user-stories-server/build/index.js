@@ -30,13 +30,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
                 description: "Fetch user stories from the API",
                 inputSchema: {
                     type: "object",
-                    properties: {
-                        project_id: {
-                            type: "string",
-                            description: "Project ID to fetch stories for"
-                        }
-                    },
-                    required: ["project_id"]
+                    properties: {},
+                    required: []
                 }
             }
         ]
@@ -49,18 +44,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
     switch (request.params.name) {
         case "fetch_user_stories": {
-            const projectId = String(request.params.arguments?.project_id);
-            if (!projectId) {
-                throw new Error("Project ID is required");
-            }
             try {
-                const response = await axios.post(API_URL, [{
-                        project_id: projectId,
-                        design: {
-                            apiDesign: [],
-                            uiDesign: []
-                        }
-                    }]);
+                const response = await axios.get(API_URL);
                 return {
                     content: [{
                             type: "text",

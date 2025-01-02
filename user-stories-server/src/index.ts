@@ -57,12 +57,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (request.params.name) {
     case "fetch_user_stories": {
       try {
-        const response = await axios.post(API_URL, [{
-          design: {
-            apiDesign: [],
-            uiDesign: []
-          }
-        }]);
+        const response = await axios.get(API_URL);
 
         return {
           content: [{
